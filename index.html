@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>靈氣 (REIKI) - 心身を整える癒しの空間</title>
+    <style>
+        :root {
+            --primary-color: #e0f2f1;
+            --accent-color: #80cbc4;
+            --text-color: #37474f;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* アニメーション */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* ヘッダー */
+        header {
+            padding: 2rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav button {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        nav button:hover, nav button.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* コンテンツエリア */
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.8s ease forwards;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #26a69a;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 300px;
+            background: #eee url('https://via.placeholder.com/800x300/e0f2f1/80cbc4?text=Healing+Energy') center/cover;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        /* 靈氣演出機能 */
+        .meditation-circle {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(128,203,196,0.6) 0%, rgba(128,203,196,0) 70%);
+            margin: 3rem auto;
+            border-radius: 50%;
+            animation: pulse 4s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* ローカル保存機能（お悩みメモ） */
+        .journal-box {
+            margin-top: 2rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            resize: none;
+        }
+
+        .btn-save {
+            background: #26a69a;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* モーダル */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 400px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>靈氣 - REIKI -</h1>
+    <p>宇宙のエネルギーと調和する</p>
+    <nav>
+        <button onclick="showSection('home')" class="nav-btn active" id="btn-home">ホーム</button>
+        <button onclick="showSection('about')" class="nav-btn" id="btn-about">靈氣とは</button>
+        <button onclick="showSection('practice')" class="nav-btn" id="btn-practice">セルフケア</button>
+        <button onclick="showSection('journal')" class="nav-btn" id="btn-journal">心の記録</button>
+    </nav>
+</header>
+
+<main>
+    <section id="home" class="section active">
+        <div class="hero-img"></div>
+        <h2>ようこそ</h2>
+        <p>靈氣（レイキ）は、古来より伝わる手当てによる癒しの技法です。</p>
+        <p>このサイトでは、多忙な日常の中で忘れがちな「静寂」と「エネルギーの循環」を思い出すお手伝いをします。</p>
+        <div class="meditation-circle" onclick="openModal()">
+            集中
+        </div>
+        <p style="text-align: center; font-style: italic;">円をタップして心を落ち着けましょう</p>
+    </section>
+
+    <section id="about" class="section">
+        <h2>靈氣（レイキ）の概念</h2>
+        <p>靈氣は、私たちの周りに偏在する生命エネルギーを活用する手法です。</p>
+        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+            <li><strong>靈：</strong> 宇宙に満ちる崇高なもの</li>
+            <li><strong>氣：</strong> 生命の根源的なエネルギー</li>
+        </ul>
+        <div style="margin-top: 1.5rem;">
+            <p>特別な修行は必要ありません。ただ、そこに在るエネルギーを感じ、流すだけです。心身の緊張を解きほぐし、自然治癒力を高めます。</p>
+        </div>
+    </section>
+
+    <section id="practice" class="section">
+        <h2>5つのセルフケア</h2>
+        <div style="background: #fff; padding: 1rem; border-radius: 10px; border-left: 5px solid var(--accent-color);">
+            <p>今日だけは：</p>
+            <ol style="margin-left: 2rem;">
+                <li>怒るな</li>
+                <li>心配すな</li>
+                <li>感謝して</li>
+                <li>業をはげめ</li>
+                <li>人に親切に</li>
+            </ol>
+        </div>
+        <p style="margin-top: 1.5rem;">これらは「五戒」と呼ばれ、心の安寧を保つための指針となります。</p>
+    </section>
+
+    <section id="journal" class="section">
+        <h2>心の浄化ノート</h2>
+        <p>今の気持ちを書き出し、手放しましょう。内容はあなたのブラウザ内（localStorage）のみに保存され、サーバーへ送信されることはありません。</p>
+        <div class="journal-box">
+            <textarea id="noteInput" placeholder="今、何を感じていますか？"></textarea>
+            <button class="btn-save" onclick="saveNote()">記憶を刻む</button>
+            <button class="btn-save" style="background:#bbb;" onclick="clearNote()">消去する</button>
+        </div>
+        <div id="savedStatus" style="margin-top: 10px; color: #26a69a; font-weight: bold;"></div>
+    </section>
+</main>
+
+<div id="modal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h3>深い呼吸を</h3>
+        <p>鼻から吸って、口からゆっくり吐き出します。</p>
+        <p>エネルギーが指先から全身へ巡るのをイメージしてください。</p>
+        <br>
+        <button class="btn-save" onclick="closeModal()">戻る</button>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 REIKI Healing Space - Created for GitHub Pages</p>
+</footer>
+
+<script>
+    // セクション切り替え（JavaScriptによる画面切替）
+    function showSection(sectionId) {
+        // すべてのセクションを非表示
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        // 対象のセクションを表示
+        document.getElementById(sectionId).classList.add('active');
+
+        // ボタンのスタイル更新
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById('btn-' + sectionId).classList.add('active');
+        
+        // ページ上部へスクロール
+        window.scrollTo(0, 0);
+    }
+
+    // モーダル制御
+    function openModal() {
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    // localStorageを使用した保存機能
+    window.onload = function() {
+        const savedNote = localStorage.getItem('reiki_note');
+        if (savedNote) {
+            document.getElementById('noteInput').value = savedNote;
+        }
+    }
+
+    function saveNote() {
+        const content = document.getElementById('noteInput').value;
+        localStorage.setItem('reiki_note', content);
+        const status = document.getElementById('savedStatus');
+        status.innerText = "想いはブラウザに保存されました。";
+        setTimeout(() => { status.innerText = ""; }, 3000);
+    }
+
+    function clearNote() {
+        if(confirm("この記録を消去しますか？")) {
+            localStorage.removeItem('reiki_note');
+            document.getElementById('noteInput').value = "";
+        }
+    }
+</script>
+
+</body>
+</html>
